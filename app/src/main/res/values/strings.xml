@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Trendy</string>
 
+    <string name="queryPrompt">Search a Tag</string>
     <string name="welcome_string">Welcome to Giphy!</string>
     <string name="action_settings">Settings</string>
 </resources>
