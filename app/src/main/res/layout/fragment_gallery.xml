@@ -2,22 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_bright">
+    android:background="@android:color/black">
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:layout_gravity="fill_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:id="@+id/searchView">
+        android:layout_height="wrap_content">
 
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|fill_horizontal"
+            android:layout_weight="1"
             android:id="@+id/tagEditText"
-            android:text="@string/queryPrompt"
-            android:layout_weight="1" />
+            android:textColor="#ba7a93a7"
+            android:text="@string/queryPrompt" />
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -26,18 +25,97 @@
             android:src="@android:drawable/ic_search_category_default" />
     </LinearLayout>
 
-    <com.example.jmmil.trendy.GifView
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:id="@+id/selectedGIFView"
-        android:layout_weight="3"
-        android:layout_gravity="center"
-        android:foregroundGravity="center_vertical|center_horizontal"/>
-
-    <ScrollView
+    <com.example.jmmil.trendy.GlideView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:id="@+id/resultsScrollView"
-        android:layout_weight="5" />
+        android:id="@+id/previewGlideView"
+        android:layout_weight="2" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/previewLinearLayout1"
+        android:layout_weight="1">
+
+        <com.example.jmmil.trendy.GlideView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/glideView1"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/preview_vertical_margin" />
+
+        <com.example.jmmil.trendy.GlideView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/glideView2"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/preview_vertical_margin" />
+
+        <com.example.jmmil.trendy.GlideView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/glideView3"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/preview_vertical_margin" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/previewLinearLayout2"
+        android:layout_weight="1">
+
+        <com.example.jmmil.trendy.GlideView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/glideView4"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/preview_vertical_margin" />
+
+        <com.example.jmmil.trendy.GlideView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/glideView5"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/preview_vertical_margin" />
+
+        <com.example.jmmil.trendy.GlideView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/glideView6"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/preview_vertical_margin" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/previewLinearLayout3"
+        android:layout_weight="1">
+
+        <com.example.jmmil.trendy.GlideView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/glideView7"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/preview_vertical_margin" />
+
+        <com.example.jmmil.trendy.GlideView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/glideView8"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/preview_vertical_margin" />
+
+        <com.example.jmmil.trendy.GlideView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/glideView9"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/preview_vertical_margin" />
+    </LinearLayout>
 
 </LinearLayout>
