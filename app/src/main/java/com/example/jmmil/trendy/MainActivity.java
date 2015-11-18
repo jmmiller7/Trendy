@@ -46,9 +46,9 @@ class MyPagerAdapter extends FragmentPagerAdapter {
             fragment = new SimpleGalleryFragment();
         }
         else if(position == 1){
-            fragment = new SimpleGalleryFragment2();
+            fragment = new SimpleGalleryFragment();
         }
-        else fragment = new SimpleGalleryFragment3();
+        else fragment = new SimpleGalleryFragment();
 
         return fragment;
     }

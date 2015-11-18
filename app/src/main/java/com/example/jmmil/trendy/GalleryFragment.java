@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 
 import com.bumptech.glide.Glide;
 
+
 public class GalleryFragment extends Fragment {
 
     GlideView glideView1;
