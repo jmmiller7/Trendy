@@ -15,25 +15,19 @@ public class SimpleGalleryFragment extends Fragment {
     private int NUM_COLUMNS=3;
 
     String[] imageIDs = {
-            "android.resource://com.example.jmmil.trendy/" + R.drawable.icon2,
-            "android.resource://com.example.jmmil.trendy/" + R.drawable.icon2,
-            "android.resource://com.example.jmmil.trendy/" + R.drawable.icon2,
             "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
             "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
             "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-            "android.resource://com.example.jmmil.trendy/" + R.drawable.file2,
-            "android.resource://com.example.jmmil.trendy/" + R.drawable.file2,
-            "android.resource://com.example.jmmil.trendy/" + R.drawable.file2,
-            "android.resource://com.example.jmmil.trendy/" + R.drawable.file3,
-            "android.resource://com.example.jmmil.trendy/" + R.drawable.file3,
-            "android.resource://com.example.jmmil.trendy/" + R.drawable.file3,
-            "android.resource://com.example.jmmil.trendy/" + R.drawable.file1,
-            "android.resource://com.example.jmmil.trendy/" + R.drawable.file1,
-            "android.resource://com.example.jmmil.trendy/" + R.drawable.file1,
-            "android.resource://com.example.jmmil.trendy/" + R.drawable.icon2,
-            "android.resource://com.example.jmmil.trendy/" + R.drawable.icon2,
-            "android.resource://com.example.jmmil.trendy/" + R.drawable.icon2,
-            "android.resource://com.example.jmmil.trendy/" + R.drawable.icon2
+            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
     };
 
 
