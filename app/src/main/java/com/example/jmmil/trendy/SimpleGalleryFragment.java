@@ -1,28 +1,18 @@
 package com.example.jmmil.trendy;
 
-//import android.app.Fragment;
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
 
 public class SimpleGalleryFragment extends Fragment {
 
-    GlideView previewGlideView;
-
-
-    /*
-    Integer[] imageIDs ={R.raw.ted_gif, R.raw.ted_gif, R.raw.ted_gif, R.raw.ted_gif,
-            R.raw.ted_gif, R.raw.ted_gif, R.raw.ted_gif, R.raw.ted_gif,
-            R.raw.ted_gif, R.raw.ted_gif, R.raw.ted_gif,
-            R.raw.ted_gif, R.raw.ted_gif, R.raw.ted_gif, R.raw.ted_gif};
-    */
+    private RecyclerView mRecyclerView;
+    private int NUM_COLUMNS=3;
 
     String[] imageIDs = {
             "android.resource://com.example.jmmil.trendy/" + R.drawable.icon2,
@@ -56,25 +46,14 @@ public class SimpleGalleryFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.simple_fragment_gallery, container, false);
 
-
-        //previewGlideView = (GlideView) view.findViewById(R.id.previewGlideView);
-        //previewGlideView.setGlideView("https://media0.giphy.com/media/3rgXBDGArplt1PJodi/200w.gif");
-
-        GridView gridView = (GridView) view.findViewById(R.id.gridview);
-        gridView.setAdapter(new ImageAdapter(getContext()));
-
-
-        // TODO
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent,
-                                    View v, int position, long id) {
-
-            }
-        });
-
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), NUM_COLUMNS));
+        mRecyclerView.setAdapter(new GalleryFragmentAdapter());
 
         return view;
     }
+
+
 
     private OnClickListener glideViewListener = new OnClickListener(){
 
@@ -89,36 +68,41 @@ public class SimpleGalleryFragment extends Fragment {
     };
 
 
-    public class ImageAdapter extends BaseAdapter
+    public class GalleryFragmentAdapter extends RecyclerView.Adapter<GlideViewHolder>
     {
-        private Context context;
-
-        public ImageAdapter(Context c)
+        @Override
+        public GlideViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
-            context = c;
+            return new GlideViewHolder(new GlideView(getContext()));
         }
 
-        //---returns the number of images---
-        public int getCount() {
+        @Override
+        public void onBindViewHolder(GlideViewHolder holder, int position)
+        {
+            String uri = imageIDs[position];
+            holder.setImageURL(uri);
+        }
+
+        @Override
+        public int getItemCount()
+        {
             return imageIDs.length;
         }
+    }
 
-        //---returns the ID of an item---
-        public Object getItem(int position) {
-            return position;
-        }
+    public class GlideViewHolder extends RecyclerView.ViewHolder
+    {
+        private GlideView mGlideView;
 
-        public long getItemId(int position) {
-            return position;
-        }
-
-        //---returns a populated GlideView view---
-        public View getView(int position, View convertView, ViewGroup parent)
+        public GlideViewHolder(View itemView)
         {
-            GlideView glideView = new GlideView(context);
-            glideView.setGlideView(imageIDs[position]);
-            return glideView;
+            super(itemView);
+            mGlideView = (GlideView) itemView;
+        }
 
+        public void setImageURL(String imageURL)
+        {
+            mGlideView.setGlideView(imageURL);
         }
     }
 }
