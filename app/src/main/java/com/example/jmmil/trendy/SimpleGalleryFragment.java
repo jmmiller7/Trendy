@@ -35,7 +35,7 @@ public class SimpleGalleryFragment extends Fragment {
 
     private String[] populateURLS(){
         String[] imageIDs = {
-                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+                "https://media.giphy.com/media/1XoXJkOGri6Hu/giphy.gif",
                 "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
                 "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
                 "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
@@ -102,6 +102,7 @@ public class SimpleGalleryFragment extends Fragment {
         {
             super(itemView);
             mGlideView = (GlideView) itemView;
+
         }
 
         public void setImageURL(String imageURL)

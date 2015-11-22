@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -48,7 +47,7 @@ public class MainActivity extends FragmentActivity {
     };
 
     private void updatePages(String query){
-
+        // needs to be implemented to update giphy and imgur tabs based upon entered query
     }
 }
 
