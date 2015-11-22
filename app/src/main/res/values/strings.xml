@@ -1,7 +1,12 @@
 <resources>
     <string name="app_name">Trendy</string>
+    <string name="share_activity_name">Share the URL!</string>
 
     <string name="queryPrompt">Search a Tag</string>
     <string name="welcome_string">Welcome to Giphy!</string>
     <string name="action_settings">Settings</string>
+    <string name="share_btn_text">Share</string>
+    <string name="title_activity_selected_item_activity">selected_item_activity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

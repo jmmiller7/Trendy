@@ -1,5 +1,6 @@
 package com.example.jmmil.trendy;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -8,43 +9,48 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 public class SimpleGalleryFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private int NUM_COLUMNS=3;
 
-    String[] imageIDs = {
-            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-            "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-    };
+    String[] imageIDs;
 
-
-
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.simple_fragment_gallery, container, false);
 
+        imageIDs = populateURLS();
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), NUM_COLUMNS));
         mRecyclerView.setAdapter(new GalleryFragmentAdapter());
 
         return view;
+    }
+
+
+    private String[] populateURLS(){
+        String[] imageIDs = {
+                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+        };
+
+        return imageIDs;
     }
 
 
@@ -55,9 +61,11 @@ public class SimpleGalleryFragment extends Fragment {
 
             //TODO
             GlideView gv = (GlideView) v;
+            String url = gv.getURL();
 
-            // change previewGlideView to url that is in gv
-            //previewGlideView.setGlideView(gv.getURL());
+            Intent intent = new Intent(SimpleGalleryFragment.this.getContext(), SelectedItemActivity.class);
+            intent.putExtra("url", url);
+            startActivity(intent);
         }
     };
 
@@ -67,7 +75,9 @@ public class SimpleGalleryFragment extends Fragment {
         @Override
         public GlideViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
-            return new GlideViewHolder(new GlideView(getContext()));
+            GlideView gv = new GlideView(getContext());
+            gv.setOnClickListener(glideViewListener);
+            return new GlideViewHolder(gv);
         }
 
         @Override

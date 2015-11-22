@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="slider_bar_color" type="color">#446677</item>
+    <item name="background_color" type="color">#001122</item>
+    <item name="text_color" type="color">#99bbcc</item>
+    <item name="btn_color" type="color">#223344</item>
+</resources>

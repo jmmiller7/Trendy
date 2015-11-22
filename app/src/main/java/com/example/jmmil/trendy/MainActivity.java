@@ -24,12 +24,14 @@ public class MainActivity extends FragmentActivity {
         // Bind the tabs to the ViewPager
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabs.setViewPager(pager);
+        tabs.setIndicatorColorResource(R.color.slider_bar_color);
+        tabs.setTextColorResource(R.color.text_color);
     }
 }
 
 class MyPagerAdapter extends FragmentPagerAdapter {
 
-    private final String[] TITLES = {"Giphy","Imgur","News"};
+    private final String[] TITLES = {"Giphy","Imgur"};
 
     public MyPagerAdapter(FragmentManager fm){
         super(fm);
@@ -56,6 +58,6 @@ class MyPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return TITLES.length;
     }
 }
