@@ -35,19 +35,19 @@ public class SimpleGalleryFragment extends Fragment {
 
     private String[] populateURLS(){
         String[] imageIDs = {
-                "https://media.giphy.com/media/1XoXJkOGri6Hu/giphy.gif",
-                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
-                "android.resource://com.example.jmmil.trendy/" + R.raw.ted_gif,
+                "http://media2.giphy.com/media/1XoXJkOGri6Hu/200_d.gif",
+                "http://media0.giphy.com/media/6Lt0PMyvjTX8c/200_d.gif",
+                "http://media1.giphy.com/media/xTiTnJxChUjF4u958A/200_d.gif",
+                "http://media3.giphy.com/media/MJs7EYwHyG8XC/200_d.gif",
+                "http://media1.giphy.com/media/14rACYMwBmXDqM/200_d.gif",
+                "http://media2.giphy.com/media/3XtigW1mlKBW0/200_d.gif",
+                "http://media1.giphy.com/media/xTiTnLRQtRkaRKkKWs/200_d.gif",
+                "http://media2.giphy.com/media/3oEduZkX5W1nW0PqOk/200_d.gif",
+                "http://media2.giphy.com/media/l41lJa0rg1KO3nZAs/200_d.gif",
+                "http://media1.giphy.com/media/xTiTnybAG7cYyzzvQk/200_d.gif",
+                "http://media4.giphy.com/media/3oEduSLalG3rotykI8/200_d.gif",
+                "http://media3.giphy.com/media/l41lSxrJMaGyxyBpu/200_d.gif",
+                "http://media3.giphy.com/media/n8jpGuNug3LIQ/200_d.gif"
         };
 
         return imageIDs;
