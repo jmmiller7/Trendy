@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="slider_bar_color" type="color">#446677</item>
-    <item name="background_color" type="color">#001122</item>
-    <item name="text_color" type="color">#99bbcc</item>
-    <item name="btn_color" type="color">#223344</item>
+
+    <!-- Color Palette -->
+    <item name="dark_primary_color" type="color">#2196F3</item>
+    <item name="light_primary_color" type="color">#BBDEFB</item>
+    <item name="text_primary_color" type="color">#FFFFFF</item>
+    <item name="accent_color" type="color">#FF4081</item>
+    <item name="primary_text_color" type="color">#212121</item>
+    <item name="secondary_text_color" type="color">#727272</item>
+    <item name="divider_color" type="color">#B6B6B6</item>
+
 </resources>
