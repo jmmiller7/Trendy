@@ -5,11 +5,14 @@ import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import com.astuetz.PagerSlidingTabStrip;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, ImgurAPI.Monitor {
@@ -17,6 +20,7 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
     private EditText searchEditText;
     private ImageButton searchButton;
     private MyPagerAdapter pagerAdapter;
+    private ViewPager pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +28,7 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
         setContentView(R.layout.activity_main);
 
         // Initialize the ViewPager and set an adapter
-        ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        pager = (ViewPager) findViewById(R.id.pager);
         pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
 
@@ -61,7 +65,12 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
             SimpleGalleryFragment ourFrag = (SimpleGalleryFragment) giphy;
             ourFrag.updateView(images);
 
+            pagerAdapter.replaceItem(0, ourFrag);
+
             pagerAdapter.notifyDataSetChanged();
+
+            pager.setAdapter(pagerAdapter);
+
 
         }
 
@@ -74,9 +83,9 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
     private void updatePages(ImgurAPI.SearchResult query) {
         if (pagerAdapter != null) {
             Fragment imgur = pagerAdapter.getItem(1);
-            getSupportFragmentManager().beginTransaction().remove(imgur).commit();
+            //getSupportFragmentManager().beginTransaction().remove(imgur).commit();
 
-//            imgur.
+
         }
 
         // Request FragmentManager
@@ -114,11 +123,16 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
     public void onSearchComplete(GiphyAPI.SearchResult result) { updatePages(result); }
 }
 
-class MyPagerAdapter extends FragmentPagerAdapter {
+class MyPagerAdapter extends FragmentStatePagerAdapter {
     private final String[] TITLES = { "Giphy", "Imgur" };
+
+    ArrayList<SimpleGalleryFragment> fragments;
 
     public MyPagerAdapter(FragmentManager fm){
         super(fm);
+        fragments = new ArrayList<SimpleGalleryFragment>();
+        fragments.add(0, new SimpleGalleryFragment());
+        fragments.add(1, new SimpleGalleryFragment());
     }
 
     // This should be okay, not returning a Fragment - considering SimpleGalleryFragment is an
@@ -129,8 +143,10 @@ class MyPagerAdapter extends FragmentPagerAdapter {
         SimpleGalleryFragment fragment = null;
 
         switch(position) {
-            case 0: fragment = new SimpleGalleryFragment();
-            case 1: fragment = new SimpleGalleryFragment();
+            case 0: fragment = fragments.get(0);
+                                break;
+            case 1: fragment = fragments.get(1);
+                                break;
             default: fragment = new SimpleGalleryFragment();
         }
         return fragment;
@@ -138,15 +154,23 @@ class MyPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment;
+        SimpleGalleryFragment fragment;
 
         switch(position) {
-            case 0: fragment = new SimpleGalleryFragment();
-            case 1: fragment = new SimpleGalleryFragment();
+            case 0: fragment = fragments.get(0);
+                            break;
+            case 1: fragment = fragments.get(1);
+                    break;
             default: fragment = new SimpleGalleryFragment();
         }
 
         return fragment;
+    }
+
+
+    public void replaceItem(int position, Fragment fragment){
+        SimpleGalleryFragment temp = (SimpleGalleryFragment) fragment;
+        fragments.set(position, temp);
     }
 
     @Override
