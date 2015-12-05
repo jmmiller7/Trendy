@@ -9,14 +9,14 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-
 import com.astuetz.PagerSlidingTabStrip;
 
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, ImgurAPI.Monitor {
 
     private EditText searchEditText;
     private ImageButton searchButton;
+    private MyPagerAdapter pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,13 +25,12 @@ public class MainActivity extends FragmentActivity {
 
         // Initialize the ViewPager and set an adapter
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
-        pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+        pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        pager.setAdapter(pagerAdapter);
 
         // Bind the tabs to the ViewPager
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabs.setViewPager(pager);
-        tabs.setIndicatorColorResource(R.color.slider_bar_color);
-        tabs.setTextColorResource(R.color.text_color);
 
         searchEditText = (EditText) findViewById(R.id.tagEditText);
         searchButton = (ImageButton) findViewById(R.id.searchImageButton);
@@ -42,44 +41,117 @@ public class MainActivity extends FragmentActivity {
 
         public void onClick(View v) {
             String query = searchEditText.getText().toString();
-            updatePages(query);
+            GiphyAPI.search(query);
+            ImgurAPI.search(query);
         }
     };
 
-    private void updatePages(String query){
-        // needs to be implemented to update giphy and imgur tabs based upon entered query
+    private void updatePages(GiphyAPI.SearchResult query) {
+        if (pagerAdapter != null) {
+            Fragment giphy = pagerAdapter.getItem(0);
+
+
+            // Do stuff
+            String[] images = new String[]{
+                "http://media1.giphy.com/media/xTiTnybAG7cYyzzvQk/200_d.gif",
+                "http://media4.giphy.com/media/3oEduSLalG3rotykI8/200_d.gif",
+                "http://media3.giphy.com/media/l41lSxrJMaGyxyBpu/200_d.gif",
+                "http://media3.giphy.com/media/n8jpGuNug3LIQ/200_d.gif"
+            };
+            SimpleGalleryFragment ourFrag = (SimpleGalleryFragment) giphy;
+            ourFrag.updateView(images);
+
+            pagerAdapter.notifyDataSetChanged();
+
+        }
+
+        // Request FragmentManager
+        // Detach Fragment by tag
+        // Reattach Fragment
+        // Ref: http://stackoverflow.com/questions/20702333/refresh-fragment-at-reload
     }
+
+    private void updatePages(ImgurAPI.SearchResult query) {
+        if (pagerAdapter != null) {
+            Fragment imgur = pagerAdapter.getItem(1);
+            getSupportFragmentManager().beginTransaction().remove(imgur).commit();
+
+//            imgur.
+        }
+
+        // Request FragmentManager
+        // Detach Fragment by tag
+        // Reattach Fragment
+        // Ref: http://stackoverflow.com/questions/20702333/refresh-fragment-at-reload
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GiphyAPI.get().addMonitor(this);
+        ImgurAPI.get().addMonitor(this);
+
+        if (pagerAdapter != null) {
+            if (pagerAdapter.getGalleryItem(0).getImageIDAmt() <= 0
+                    && pagerAdapter.getGalleryItem(1).getImageIDAmt() <= 0) {
+                GiphyAPI.get().getTrending();
+                ImgurAPI.get().getTrending();
+            }
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        GiphyAPI.get().removeMonitor(this);
+        ImgurAPI.get().removeMonitor(this);
+    }
+
+    @Override
+    public void onSearchComplete(ImgurAPI.SearchResult result) { updatePages(result); }
+
+    @Override
+    public void onSearchComplete(GiphyAPI.SearchResult result) { updatePages(result); }
 }
 
 class MyPagerAdapter extends FragmentPagerAdapter {
-
-    private final String[] TITLES = {"Giphy","Imgur"};
+    private final String[] TITLES = { "Giphy", "Imgur" };
 
     public MyPagerAdapter(FragmentManager fm){
         super(fm);
     }
 
+    // This should be okay, not returning a Fragment - considering SimpleGalleryFragment is an
+    // `extend`ed version of Fragment
+    // TODO: return tag'd version so you don't have to reference
+    // TODO: Refactor this stuff
+    public SimpleGalleryFragment getGalleryItem(int position) {
+        SimpleGalleryFragment fragment = null;
+
+        switch(position) {
+            case 0: fragment = new SimpleGalleryFragment();
+            case 1: fragment = new SimpleGalleryFragment();
+            default: fragment = new SimpleGalleryFragment();
+        }
+        return fragment;
+    }
+
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment = null;
-        if(position == 0){
-            fragment = new SimpleGalleryFragment();
+        Fragment fragment;
+
+        switch(position) {
+            case 0: fragment = new SimpleGalleryFragment();
+            case 1: fragment = new SimpleGalleryFragment();
+            default: fragment = new SimpleGalleryFragment();
         }
-        else if(position == 1){
-            fragment = new SimpleGalleryFragment();
-        }
-        else fragment = new SimpleGalleryFragment();
 
         return fragment;
     }
 
     @Override
-    public CharSequence getPageTitle(int position) {
-        return TITLES[position];
-    }
+    public CharSequence getPageTitle(int position) { return TITLES[position]; }
 
     @Override
-    public int getCount() {
-        return TITLES.length;
-    }
+    public int getCount() { return TITLES.length; }
 }

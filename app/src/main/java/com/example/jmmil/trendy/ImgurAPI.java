@@ -15,47 +15,28 @@ import java.util.HashSet;
 
 /**
  * Credit to Glide examples @ https://github.com/bumptech/glide/blob/master/samples/giphy/src/main/java/com/bumptech/glide/samples/giphy/Api.java
- * A java wrapper for Giphy's http api based on https://github.com/Giphy/GiphyAPI.
+ * Based off of Glide's example class, we've created a smiliar one to handle Imgur's API.
  */
-public final class GiphyAPI {
-    private static volatile GiphyAPI api = null;
-    private static final String BETA_KEY = "dc6zaTOxFJmzC";
-    private static final String BASE_URL = "https://api.giphy.com/";
-    private static final String SEARCH_PATH = "v1/gifs/search";
-    private static final String TRENDING_PATH = "v1/gifs/trending";
+public final class ImgurAPI {
+    private static volatile ImgurAPI api = null;
+    private static final String CLIENT_ID = "a1b5ac69c0c9d56";
+    private static final String BASE_URL = "https://api.giphy.com/v3";
+    private static final String SEARCH_PATH = "/gallery/search";
+    private static final String TRENDING_PATH = "/gallery/hot/viral/0.json";
     private static Handler bgHandler;
     private static Handler mainHandler;
     private static final HashSet<Monitor> monitors = new HashSet<Monitor>();
 
-
     private static String signUrl(String url) {
-        return url + "&api_key=" + BETA_KEY;
+        return url;
     }
 
-    private static String getSearchUrl(String query, int limit, int offset) {
-        return signUrl(
-                BASE_URL + SEARCH_PATH + "?q=" + query + "&limit=" + limit + "&offset=" + offset);
+    private static String getSearchUrl(String query) {
+        return signUrl(BASE_URL + SEARCH_PATH + "?q=" + query);
     }
 
-    private static String getTrendingUrl(int limit, int offset) {
-        return signUrl(BASE_URL + TRENDING_PATH + "?limit=" + limit + "&offset=" + offset);
-    }
-
-    public static GiphyAPI get() {
-        if (api == null) {
-            synchronized (GiphyAPI.class) {
-                if (api == null) { api = new GiphyAPI(); }
-            }
-        }
-        return api;
-    }
-
-    private GiphyAPI() {
-        HandlerThread bgThread = new HandlerThread("api_thread");
-        bgThread.start();
-        bgHandler = new Handler(bgThread.getLooper());
-        mainHandler = new Handler(Looper.getMainLooper());
-        // Do nothing.
+    private static String getTrendingUrl() {
+        return signUrl(BASE_URL + TRENDING_PATH);
     }
 
     /**
@@ -65,10 +46,26 @@ public final class GiphyAPI {
         /**
          * Called when a search completes.
          *
-         * @param result The results returned from Giphy's search api.
+         * @param result The results returned from Imgur's search api.
          */
+        void onSearchComplete(SearchResult result);
+    }
 
-        void onSearchComplete(GiphyAPI.SearchResult result);
+    public static ImgurAPI get() {
+        if (api == null) {
+            synchronized (ImgurAPI.class) {
+                if (api == null) { api = new ImgurAPI(); }
+            }
+        }
+        return api;
+    }
+
+    private ImgurAPI() {
+        HandlerThread bgThread = new HandlerThread("api_thread");
+        bgThread.start();
+        bgHandler = new Handler(bgThread.getLooper());
+        mainHandler = new Handler(Looper.getMainLooper());
+        // Do nothing.
     }
 
     public void addMonitor(Monitor monitor) {
@@ -80,12 +77,12 @@ public final class GiphyAPI {
     }
 
     public static void search(String searchTerm) {
-        String searchUrl = getSearchUrl(searchTerm, 100, 0);
+        String searchUrl = getSearchUrl(searchTerm);
         query(searchUrl);
     }
 
     public void getTrending() {
-        String trendingUrl = getTrendingUrl(100, 0);
+        String trendingUrl = getTrendingUrl();
         query(trendingUrl);
     }
 
@@ -94,7 +91,6 @@ public final class GiphyAPI {
             @Override
             public void run() {
             URL url;
-
             try {
                 url = new URL(apiUrl);
             } catch (MalformedURLException e) {
@@ -106,6 +102,7 @@ public final class GiphyAPI {
             SearchResult result = new SearchResult();
             try {
                 urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestProperty("Authorization", "Client-ID " + CLIENT_ID);
                 is = urlConnection.getInputStream();
                 InputStreamReader reader = new InputStreamReader(is);
                 result = new Gson().fromJson(reader, SearchResult.class);
@@ -136,8 +133,6 @@ public final class GiphyAPI {
             }
         });
     }
-
-
 
     /**
      * A POJO mirroring the top level result JSON object returned from Giphy's api.

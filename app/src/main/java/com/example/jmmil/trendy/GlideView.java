@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 /**
  * Created by jmmil on 11/14/2015.
@@ -33,18 +34,10 @@ public class GlideView extends ImageView{
     }
 
     @Override
-    protected void onDraw(Canvas canvas)
-    {
-        // TODO Auto-generated method stub
-        super.onDraw(canvas);
-    }
+    protected void onDraw(Canvas canvas) { super.onDraw(canvas); }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event)
-    {
-        return super.onTouchEvent(event);
-
-    }
+    public boolean onTouchEvent(MotionEvent event) { return super.onTouchEvent(event); }
 
     public String getURL(){
         return url;
@@ -54,6 +47,7 @@ public class GlideView extends ImageView{
         this.url = url;
         Glide.with(context)
                 .load(url)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(this);
     }
 }
