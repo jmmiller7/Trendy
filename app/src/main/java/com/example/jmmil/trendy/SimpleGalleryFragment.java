@@ -24,12 +24,15 @@ public class SimpleGalleryFragment extends Fragment {
             "http://media2.giphy.com/media/3XtigW1mlKBW0/200_d.gif",
             "http://media1.giphy.com/media/xTiTnLRQtRkaRKkKWs/200_d.gif"
     };
+    private LayoutInflater inflater;
+    private ViewGroup container;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         super.onCreateView(inflater, container, savedInstanceState);
-
+        this.inflater = inflater;
+        this.container = container;
         view = inflater.inflate(R.layout.simple_fragment_gallery, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
@@ -41,7 +44,10 @@ public class SimpleGalleryFragment extends Fragment {
 
     public void updateView(String[] images) {
         imageIDs = images;
-//        delete mRecyclerView.getAdapter();
+        view = inflater.inflate(R.layout.simple_fragment_gallery, container, false);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        mRecyclerView.swapAdapter(new GalleryFragmentAdapter(), false);
+        
     }
 
     private OnClickListener glideViewListener = new OnClickListener(){
@@ -76,21 +82,9 @@ public class SimpleGalleryFragment extends Fragment {
 
         @Override
         public int getItemCount() { return imageIDs.length; }
-
-//        public void clearData() {
-//            int size = imageIDs.size();
-//            if (size > 0) {
-//                for (int i = 0; i < size; i++) {
-//                    imageIDs.remove(0);
-//                }
-//
-//                this.notifyItemRangeRemoved(0, size);
-//            }
-//        }
     }
 
-    public class GlideViewHolder extends RecyclerView.ViewHolder
-    {
+    public class GlideViewHolder extends RecyclerView.ViewHolder {
         private GlideView mGlideView;
 
         public GlideViewHolder(View itemView) {
