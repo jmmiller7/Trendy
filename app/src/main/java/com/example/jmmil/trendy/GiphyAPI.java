@@ -149,6 +149,8 @@ public final class GiphyAPI {
         public String toString() {
             return "SearchResult{" + "data=" + Arrays.toString(data) + '}';
         }
+
+        public int getSize() { return data.length; }
     }
 
     /**
@@ -156,7 +158,6 @@ public final class GiphyAPI {
      */
     public static class GifResult {
         public String id;
-        // Page url not gif url
         public String url;
         public GifUrlSet images;
 
@@ -182,6 +183,8 @@ public final class GiphyAPI {
                     + fixed_width + ", fixed_height=" + fixed_height
                     + '}';
         }
+
+        public GifImage getOriginal() { return original; }
     }
 
     /**
@@ -200,5 +203,7 @@ public final class GiphyAPI {
             return "GifImage{" + "url='" + url + '\'' + ", width=" + width + ", height=" + height
                     + ", frames=" + frames + ", size=" + size + '}';
         }
+
+        public String getUrl() { return url; }
     }
 }

@@ -47,6 +47,7 @@ public class GlideView extends ImageView{
         this.url = url;
         Glide.with(context)
                 .load(url)
+                .fitCenter()
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(this);
     }

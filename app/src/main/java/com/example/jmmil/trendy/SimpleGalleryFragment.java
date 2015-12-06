@@ -15,15 +15,7 @@ public class SimpleGalleryFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private int NUM_COLUMNS = 3;
     private View view;
-    public String[] imageIDs = new String[]{
-            "http://media2.giphy.com/media/1XoXJkOGri6Hu/200_d.gif",
-            "http://media0.giphy.com/media/6Lt0PMyvjTX8c/200_d.gif",
-            "http://media1.giphy.com/media/xTiTnJxChUjF4u958A/200_d.gif",
-            "http://media3.giphy.com/media/MJs7EYwHyG8XC/200_d.gif",
-            "http://media1.giphy.com/media/14rACYMwBmXDqM/200_d.gif",
-            "http://media2.giphy.com/media/3XtigW1mlKBW0/200_d.gif",
-            "http://media1.giphy.com/media/xTiTnLRQtRkaRKkKWs/200_d.gif"
-    };
+    public String[] imageIDs;
     private LayoutInflater inflater;
     private ViewGroup container;
 
@@ -63,7 +55,10 @@ public class SimpleGalleryFragment extends Fragment {
         }
     };
 
-    public int getImageIDAmt () { return imageIDs.length; }
+    public int getImageIDAmt () {
+        if (imageIDs == null) return 0;
+        return imageIDs.length;
+    }
 
 
     public class GalleryFragmentAdapter extends RecyclerView.Adapter<GlideViewHolder> {
@@ -81,7 +76,10 @@ public class SimpleGalleryFragment extends Fragment {
         }
 
         @Override
-        public int getItemCount() { return imageIDs.length; }
+        public int getItemCount() {
+            if (imageIDs == null) return 0;
+            return imageIDs.length;
+        }
     }
 
     public class GlideViewHolder extends RecyclerView.ViewHolder {
