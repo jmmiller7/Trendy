@@ -1,5 +1,6 @@
 package com.example.jmmil.trendy;
 
+import android.content.Context;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +9,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import com.astuetz.PagerSlidingTabStrip;
@@ -47,6 +49,10 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
             String query = Uri.encode(searchEditText.getText().toString());
             GiphyAPI.search(query);
             ImgurAPI.search(query);
+            if (v != null) {
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+            }
         }
     };
 
