@@ -32,7 +32,7 @@ public final class ImgurAPI {
     }
 
     private static String getSearchUrl(String query) {
-        return signUrl(BASE_URL + SEARCH_PATH + "?q=" + query + "&q_size_px=500");
+        return signUrl(BASE_URL + SEARCH_PATH + "?q=" + query + "&q_size_px=500&q_type=jpgANDpng");
     }
 
     private static String getTrendingUrl() {
