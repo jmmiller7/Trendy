@@ -27,7 +27,6 @@ public final class GiphyAPI {
     private static Handler mainHandler;
     private static final HashSet<Monitor> monitors = new HashSet<Monitor>();
 
-
     private static String signUrl(String url) {
         return url + "&api_key=" + BETA_KEY;
     }
@@ -55,19 +54,9 @@ public final class GiphyAPI {
         bgThread.start();
         bgHandler = new Handler(bgThread.getLooper());
         mainHandler = new Handler(Looper.getMainLooper());
-        // Do nothing.
     }
 
-    /**
-     * An interface for listening for search results.
-     */
     public interface Monitor {
-        /**
-         * Called when a search completes.
-         *
-         * @param result The results returned from Giphy's search api.
-         */
-
         void onSearchComplete(GiphyAPI.SearchResult result);
     }
 
@@ -137,73 +126,20 @@ public final class GiphyAPI {
         });
     }
 
-
-
-    /**
-     * A POJO mirroring the top level result JSON object returned from Giphy's api.
-     */
     public static class SearchResult {
         public GifResult[] data;
-
-        @Override
-        public String toString() {
-            return "SearchResult{" + "data=" + Arrays.toString(data) + '}';
-        }
-
-        public int getSize() { return data.length; }
     }
 
-    /**
-     * A POJO mirroring an individual GIF image returned from Giphy's api.
-     */
     public static class GifResult {
         public String id;
-        public String url;
         public GifUrlSet images;
-
-        @Override
-        public String toString() {
-            return "GifResult{" + "id='" + id + '\'' + ", url='" + url + '\'' + ", images=" + images
-                    + '}';
-        }
     }
 
-    /**
-     * A POJO mirroring a JSON object with a put of urls of different sizes and dimensions returned
-     * for a single image from Giphy's api.
-     */
     public static class GifUrlSet {
-        public GifImage original;
-        public GifImage fixed_width;
-        public GifImage fixed_height;
-
-        @Override
-        public String toString() {
-            return "GifUrlSet{" + "original=" + original + ", fixed_width="
-                    + fixed_width + ", fixed_height=" + fixed_height
-                    + '}';
-        }
-
-        public GifImage getOriginal() { return original; }
+        public GifImage fixed_height_downsampled;
     }
 
-    /**
-     * A POJO mirroring a JSON object for an image with one particular url, size and dimension
-     * returned from Giphy's api.
-     */
     public static class GifImage {
         public String url;
-        public int width;
-        public int height;
-        public int frames;
-        public int size;
-
-        @Override
-        public String toString() {
-            return "GifImage{" + "url='" + url + '\'' + ", width=" + width + ", height=" + height
-                    + ", frames=" + frames + ", size=" + size + '}';
-        }
-
-        public String getUrl() { return url; }
     }
 }
