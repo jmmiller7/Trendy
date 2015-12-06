@@ -4,7 +4,6 @@
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/text_primary_color"
     android:orientation="vertical"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true">
@@ -12,8 +11,7 @@
     <LinearLayout
         android:layout_gravity="fill_horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/text_primary_color">
+        android:layout_height="wrap_content">
 
         <EditText
             android:layout_width="0dp"
@@ -24,7 +22,8 @@
             android:textColor="@color/secondary_text_color"
             android:text="@string/search_query_prompt"
             android:inputType="text"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:autoText="false" />
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -51,7 +50,7 @@
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/text_primary_color"/>
+        android:background="@color/secondary_text_color"/>
 
 </LinearLayout>
 

@@ -39,6 +39,24 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
         tabs.setViewPager(pager);
 
         searchEditText = (EditText) findViewById(R.id.tagEditText);
+        searchEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText et = (EditText) v;
+                et.setText("");
+            }
+        });
+
+        searchEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    EditText et = (EditText) v;
+                    et.setText("");
+                }
+            }
+        });
+
         searchButton = (ImageButton) findViewById(R.id.searchImageButton);
         searchButton.setOnClickListener(buttonListener);
     }
@@ -59,7 +77,7 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
     private void updatePages(GiphyAPI.SearchResult query) {
         if (pagerAdapter != null) {
             Fragment giphy = pagerAdapter.getItem(0);
-            int amt = 25;
+            int amt = 22;
 
             String[] images = new String[amt];
             List<String> tmp = new ArrayList<String>();
@@ -82,7 +100,7 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
     private void updatePages(ImgurAPI.SearchResult query) {
         if (pagerAdapter != null) {
             Fragment imgur = pagerAdapter.getItem(1);
-            int amt = 25;
+            int amt = 22;
 
             String[] images = new String[amt];
             List<String> tmp = new ArrayList<String>();
