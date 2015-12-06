@@ -67,10 +67,13 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
             String query = Uri.encode(searchEditText.getText().toString());
             GiphyAPI.search(query);
             ImgurAPI.search(query);
+
+
             if (v != null) {
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
             }
+
         }
     };
 
@@ -105,10 +108,22 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
             String[] images = new String[amt];
             List<String> tmp = new ArrayList<String>();
 
+            int counter = 0;
+
             for (int i = 0; i < amt-1; i++) {
-                ImgurAPI.imageResult q  = query.data[i];
-                tmp.add(q.link);
+
+                ImgurAPI.imageResult q  = query.data[counter++];
+                if (!q.animated) {
+                    tmp.add(q.link);
+                }
+                else {
+                    i--;
+                    if (query.data.length + 1 == counter)
+                        break;
+                }
             }
+
+
             images = tmp.toArray(images);
 
             SimpleGalleryFragment ourFrag = (SimpleGalleryFragment) imgur;

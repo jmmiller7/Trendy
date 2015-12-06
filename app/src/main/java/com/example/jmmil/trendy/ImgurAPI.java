@@ -32,11 +32,11 @@ public final class ImgurAPI {
     }
 
     private static String getSearchUrl(String query) {
-        return signUrl(BASE_URL + SEARCH_PATH + "?q=" + query + "&q_size_px=500&q_type=jpgANDpng");
+        return signUrl(BASE_URL + SEARCH_PATH + "?q=" + query + "&q_size_px=500&q_type=jpg");
     }
 
     private static String getTrendingUrl() {
-        return signUrl(BASE_URL + TRENDING_PATH);
+        return signUrl(BASE_URL + TRENDING_PATH + "&q_size_px=500&q_type=jpg");
     }
 
     public interface Monitor {
@@ -132,6 +132,7 @@ public final class ImgurAPI {
     public static class imageResult {
         public String id;
         public String link;
+        public boolean animated;
     }
 
 }
