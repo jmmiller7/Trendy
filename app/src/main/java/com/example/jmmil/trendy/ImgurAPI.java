@@ -32,22 +32,14 @@ public final class ImgurAPI {
     }
 
     private static String getSearchUrl(String query) {
-        return signUrl(BASE_URL + SEARCH_PATH + "?q=" + query);
+        return signUrl(BASE_URL + SEARCH_PATH + "?q=" + query + "&q_size_px=500");
     }
 
     private static String getTrendingUrl() {
         return signUrl(BASE_URL + TRENDING_PATH);
     }
 
-    /**
-     * An interface for listening for search results.
-     */
     public interface Monitor {
-        /**
-         * Called when a search completes.
-         *
-         * @param result The results returned from Imgur's search api.
-         */
         void onSearchComplete(SearchResult result);
     }
 
@@ -65,7 +57,6 @@ public final class ImgurAPI {
         bgThread.start();
         bgHandler = new Handler(bgThread.getLooper());
         mainHandler = new Handler(Looper.getMainLooper());
-        // Do nothing.
     }
 
     public void addMonitor(Monitor monitor) {
@@ -102,7 +93,6 @@ public final class ImgurAPI {
             SearchResult result = new SearchResult();
             try {
                 urlConnection = (HttpURLConnection) url.openConnection();
-                // only need to send Authorization headers with each request (containing our ID)
                 urlConnection.setRequestProperty("Authorization", "Client-ID " + CLIENT_ID);
                 is = urlConnection.getInputStream();
                 InputStreamReader reader = new InputStreamReader(is);
@@ -137,11 +127,6 @@ public final class ImgurAPI {
 
     public static class SearchResult {
         public imageResult[] data;
-
-        @Override
-        public String toString() {
-            return "SearchResult{" + "data=" + Arrays.toString(data) + '}';
-        }
     }
 
     public static class imageResult {

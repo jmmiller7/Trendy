@@ -60,7 +60,7 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
 
             for (int i = 0; i < amt-1; i++) {
                 GiphyAPI.GifResult q  = query.data[i];
-                tmp.add(q.images.fixed_height.getUrl());
+                tmp.add(q.images.fixed_height_downsampled.url);
             }
             images = tmp.toArray(images);
 
@@ -139,8 +139,6 @@ class MyPagerAdapter extends FragmentStatePagerAdapter {
 
     // This should be okay, not returning a Fragment - considering SimpleGalleryFragment is an
     // `extend`ed version of Fragment
-    // TODO: return tag'd version so you don't have to reference
-    // TODO: Refactor this stuff
     public SimpleGalleryFragment getGalleryItem(int position) {
         SimpleGalleryFragment fragment = null;
 
