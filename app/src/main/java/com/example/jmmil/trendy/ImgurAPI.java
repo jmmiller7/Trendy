@@ -20,9 +20,9 @@ import java.util.HashSet;
 public final class ImgurAPI {
     private static volatile ImgurAPI api = null;
     private static final String CLIENT_ID = "a1b5ac69c0c9d56";
-    private static final String BASE_URL = "https://api.giphy.com/v3";
-    private static final String SEARCH_PATH = "/gallery/search";
-    private static final String TRENDING_PATH = "/gallery/hot/viral/0.json";
+    private static final String BASE_URL = "https://api.imgur.com/3/";
+    private static final String SEARCH_PATH = "gallery/search";
+    private static final String TRENDING_PATH = "gallery/hot/viral";
     private static Handler bgHandler;
     private static Handler mainHandler;
     private static final HashSet<Monitor> monitors = new HashSet<Monitor>();
@@ -102,6 +102,7 @@ public final class ImgurAPI {
             SearchResult result = new SearchResult();
             try {
                 urlConnection = (HttpURLConnection) url.openConnection();
+                // only need to send Authorization headers with each request (containing our ID)
                 urlConnection.setRequestProperty("Authorization", "Client-ID " + CLIENT_ID);
                 is = urlConnection.getInputStream();
                 InputStreamReader reader = new InputStreamReader(is);
@@ -134,11 +135,8 @@ public final class ImgurAPI {
         });
     }
 
-    /**
-     * A POJO mirroring the top level result JSON object returned from Giphy's api.
-     */
     public static class SearchResult {
-        public GifResult[] data;
+        public imageResult[] data;
 
         @Override
         public String toString() {
@@ -146,54 +144,9 @@ public final class ImgurAPI {
         }
     }
 
-    /**
-     * A POJO mirroring an individual GIF image returned from Giphy's api.
-     */
-    public static class GifResult {
+    public static class imageResult {
         public String id;
-        // Page url not gif url
-        public String url;
-        public GifUrlSet images;
-
-        @Override
-        public String toString() {
-            return "GifResult{" + "id='" + id + '\'' + ", url='" + url + '\'' + ", images=" + images
-                    + '}';
-        }
+        public String link;
     }
 
-    /**
-     * A POJO mirroring a JSON object with a put of urls of different sizes and dimensions returned
-     * for a single image from Giphy's api.
-     */
-    public static class GifUrlSet {
-        public GifImage original;
-        public GifImage fixed_width;
-        public GifImage fixed_height;
-
-        @Override
-        public String toString() {
-            return "GifUrlSet{" + "original=" + original + ", fixed_width="
-                    + fixed_width + ", fixed_height=" + fixed_height
-                    + '}';
-        }
-    }
-
-    /**
-     * A POJO mirroring a JSON object for an image with one particular url, size and dimension
-     * returned from Giphy's api.
-     */
-    public static class GifImage {
-        public String url;
-        public int width;
-        public int height;
-        public int frames;
-        public int size;
-
-        @Override
-        public String toString() {
-            return "GifImage{" + "url='" + url + '\'' + ", width=" + width + ", height=" + height
-                    + ", frames=" + frames + ", size=" + size + '}';
-        }
-    }
 }

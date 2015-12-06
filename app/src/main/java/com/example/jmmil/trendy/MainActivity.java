@@ -1,18 +1,18 @@
 package com.example.jmmil.trendy;
 
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import com.astuetz.PagerSlidingTabStrip;
-
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, ImgurAPI.Monitor {
@@ -44,7 +44,7 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
     private View.OnClickListener buttonListener = new View.OnClickListener(){
 
         public void onClick(View v) {
-            String query = searchEditText.getText().toString();
+            String query = Uri.encode(searchEditText.getText().toString());
             GiphyAPI.search(query);
             ImgurAPI.search(query);
         }
@@ -53,45 +53,47 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
     private void updatePages(GiphyAPI.SearchResult query) {
         if (pagerAdapter != null) {
             Fragment giphy = pagerAdapter.getItem(0);
+            int amt = 25;
 
+            String[] images = new String[amt];
+            List<String> tmp = new ArrayList<String>();
 
-            // Do stuff
-            String[] images = new String[]{
-                "http://media1.giphy.com/media/xTiTnybAG7cYyzzvQk/200_d.gif",
-                "http://media4.giphy.com/media/3oEduSLalG3rotykI8/200_d.gif",
-                "http://media3.giphy.com/media/l41lSxrJMaGyxyBpu/200_d.gif",
-                "http://media3.giphy.com/media/n8jpGuNug3LIQ/200_d.gif"
-            };
+            for (int i = 0; i < amt-1; i++) {
+                GiphyAPI.GifResult q  = query.data[i];
+                tmp.add(q.images.fixed_height.getUrl());
+            }
+            images = tmp.toArray(images);
+
             SimpleGalleryFragment ourFrag = (SimpleGalleryFragment) giphy;
             ourFrag.updateView(images);
 
             pagerAdapter.replaceItem(0, ourFrag);
-
             pagerAdapter.notifyDataSetChanged();
-
             pager.setAdapter(pagerAdapter);
-
-
         }
-
-        // Request FragmentManager
-        // Detach Fragment by tag
-        // Reattach Fragment
-        // Ref: http://stackoverflow.com/questions/20702333/refresh-fragment-at-reload
     }
 
     private void updatePages(ImgurAPI.SearchResult query) {
         if (pagerAdapter != null) {
             Fragment imgur = pagerAdapter.getItem(1);
-            //getSupportFragmentManager().beginTransaction().remove(imgur).commit();
+            int amt = 25;
 
+            String[] images = new String[amt];
+            List<String> tmp = new ArrayList<String>();
 
+            for (int i = 0; i < amt-1; i++) {
+                ImgurAPI.imageResult q  = query.data[i];
+                tmp.add(q.link);
+            }
+            images = tmp.toArray(images);
+
+            SimpleGalleryFragment ourFrag = (SimpleGalleryFragment) imgur;
+            ourFrag.updateView(images);
+
+            pagerAdapter.replaceItem(1, ourFrag);
+            pagerAdapter.notifyDataSetChanged();
+            pager.setAdapter(pagerAdapter);
         }
-
-        // Request FragmentManager
-        // Detach Fragment by tag
-        // Reattach Fragment
-        // Ref: http://stackoverflow.com/questions/20702333/refresh-fragment-at-reload
     }
 
     @Override
@@ -144,9 +146,9 @@ class MyPagerAdapter extends FragmentStatePagerAdapter {
 
         switch(position) {
             case 0: fragment = fragments.get(0);
-                                break;
+                break;
             case 1: fragment = fragments.get(1);
-                                break;
+                break;
             default: fragment = new SimpleGalleryFragment();
         }
         return fragment;
@@ -158,9 +160,9 @@ class MyPagerAdapter extends FragmentStatePagerAdapter {
 
         switch(position) {
             case 0: fragment = fragments.get(0);
-                            break;
+                break;
             case 1: fragment = fragments.get(1);
-                    break;
+                break;
             default: fragment = new SimpleGalleryFragment();
         }
 
