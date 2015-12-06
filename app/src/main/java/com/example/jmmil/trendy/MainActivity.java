@@ -8,10 +8,14 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
 import com.astuetz.PagerSlidingTabStrip;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +58,20 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
                     EditText et = (EditText) v;
                     et.setText("");
                 }
+            }
+        });
+
+        searchEditText.setOnEditorActionListener(new EditText.OnEditorActionListener(){
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) ||
+                    (actionId == EditorInfo.IME_ACTION_DONE)){
+                    String query = Uri.encode(searchEditText.getText().toString());
+                    GiphyAPI.search(query);
+                    ImgurAPI.search(query);
+                }
+
+                return false;
             }
         });
 
