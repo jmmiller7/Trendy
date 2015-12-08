@@ -1,11 +1,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/background_color"
     android:orientation="vertical"
     android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="true" >
+    android:focusableInTouchMode="true">
 
     <LinearLayout
         android:layout_gravity="fill_horizontal"
@@ -18,29 +19,38 @@
             android:layout_gravity="bottom|fill_horizontal"
             android:layout_weight="1"
             android:id="@+id/tagEditText"
-            android:textColor="@color/text_color"
-            android:text="@string/queryPrompt" />
+            android:textColor="@color/secondary_text_color"
+            android:text="@string/search_query_prompt"
+            android:inputType="text"
+            android:singleLine="true"
+            android:autoText="false" />
 
         <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/searchImageButton"
-            android:src="@android:drawable/ic_search_category_default" />
+            android:src="@mipmap/ic_search"
+            android:background="@color/accent_color"
+            android:layout_weight="0.10"
+            android:cropToPadding="false" />
     </LinearLayout>
 
     <com.astuetz.PagerSlidingTabStrip
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/background_color"
-        android:layout_gravity="center" />
+        android:background="@color/dark_primary_color"
+        android:layout_gravity="center"
+        app:pstsTabTextColor="@color/text_primary_color"
+        app:pstsIndicatorColor="@color/accent_color"
+        app:pstsIndicatorHeight="2dp" />
 
     <android.support.v4.view.ViewPager
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background_color"/>
+        android:background="@color/secondary_text_color"/>
 
 </LinearLayout>
 

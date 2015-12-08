@@ -19,9 +19,7 @@ public class SelectedItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_selected_item);
 
         Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            url = extras.getString("url");
-        }
+        if (extras != null) { url = extras.getString("url"); }
 
         glideView = (GlideView) findViewById(R.id.glideView);
         glideView.setGlideView(url);
