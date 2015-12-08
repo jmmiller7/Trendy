@@ -10,7 +10,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 /**
- * Created by jmmil on 11/14/2015.
+ * Created by Jake
+ *
+ * Uses Glide package from bumptech
  */
 public class GlideView extends ImageView{
 

@@ -14,6 +14,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 /**
+ * Created by Henry
+ *
  * Credit to Glide examples @ https://github.com/bumptech/glide/blob/master/samples/giphy/src/main/java/com/bumptech/glide/samples/giphy/Api.java
  * Based off of Glide's example class, we've created a smiliar one to handle Imgur's API.
  */

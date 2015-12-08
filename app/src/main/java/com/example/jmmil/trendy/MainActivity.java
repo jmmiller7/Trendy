@@ -28,6 +28,8 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
     private MyPagerAdapter pagerAdapter;
     private ViewPager pager;
 
+
+    // Jake
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +81,7 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
         searchButton.setOnClickListener(buttonListener);
     }
 
+    // Henry
     private View.OnClickListener buttonListener = new View.OnClickListener(){
 
         public void onClick(View v) {
@@ -95,6 +98,7 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
         }
     };
 
+    // Henry
     private void updatePages(GiphyAPI.SearchResult query) {
         if (pagerAdapter != null) {
             Fragment giphy = pagerAdapter.getItem(0);
@@ -104,8 +108,10 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
             List<String> tmp = new ArrayList<String>();
 
             for (int i = 0; i < amt-1; i++) {
+                if (i >= query.data.length) break;
                 GiphyAPI.GifResult q  = query.data[i];
                 tmp.add(q.images.fixed_height_downsampled.url);
+
             }
             images = tmp.toArray(images);
 
@@ -118,6 +124,7 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
         }
     }
 
+    // Henry
     private void updatePages(ImgurAPI.SearchResult query) {
         if (pagerAdapter != null) {
             Fragment imgur = pagerAdapter.getItem(1);
@@ -130,7 +137,10 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
 
             for (int i = 0; i < amt-1; i++) {
 
+                if (counter >= query.data.length) break;
+
                 ImgurAPI.imageResult q  = query.data[counter++];
+
                 if (!q.animated) {
                     tmp.add(q.link);
                 }
@@ -153,7 +163,6 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
         }
     }
 
-    @Override
     protected void onStart() {
         super.onStart();
         GiphyAPI.get().addMonitor(this);
@@ -182,6 +191,8 @@ public class MainActivity extends FragmentActivity implements GiphyAPI.Monitor, 
     public void onSearchComplete(GiphyAPI.SearchResult result) { updatePages(result); }
 }
 
+
+// Jake and Henry both contributed
 class MyPagerAdapter extends FragmentStatePagerAdapter {
     private final String[] TITLES = { "Giphy", "Imgur" };
 
@@ -224,7 +235,7 @@ class MyPagerAdapter extends FragmentStatePagerAdapter {
         return fragment;
     }
 
-
+    // Jake
     public void replaceItem(int position, Fragment fragment){
         SimpleGalleryFragment temp = (SimpleGalleryFragment) fragment;
         fragments.set(position, temp);

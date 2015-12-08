@@ -14,6 +14,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 /**
+ * Class created by Henry
+ *
  * Credit to Glide examples @ https://github.com/bumptech/glide/blob/master/samples/giphy/src/main/java/com/bumptech/glide/samples/giphy/Api.java
  * A java wrapper for Giphy's http api based on https://github.com/Giphy/GiphyAPI.
  */
